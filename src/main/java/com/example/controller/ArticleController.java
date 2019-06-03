@@ -32,7 +32,7 @@ public class ArticleController {
 	@RequestMapping("")
 	public String index(Model model) {
 		List<Article> articleList=repository.findAll();
-		model.addAttribute("ArticleList",articleList);
+		model.addAttribute("articleList",articleList);
 		return "bbs";
 	}
 }

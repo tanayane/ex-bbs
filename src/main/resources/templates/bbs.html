@@ -5,6 +5,24 @@
 <title>title</title>
 </head>
 <body>
-	ok
+	<h1>掲示板アプリケーション</h1>
+	<form action ="bbs.html" th:action="@{/articlepost}">
+		<label for="artnameform">投稿者名：</label>
+		<input type="text" name="name" id="artnameform">
+		<br>
+		<label for="artcommform">投稿内容：</label>
+		<textarea name="content" id="artcommform"></textarea>
+		<br>
+		<input type="submit" value="記事投稿">
+	</form>
+	<div>
+		<div th:each="article:${articleList}">
+			<hr>
+			<div>投稿ID：<span th:text="${article.id}">id</span></div>
+			<div>投稿者名：<span th:text="${article.name}">name</span></div>
+			<div>投稿内容：<span th:text="${article.content}">content</span></div>
+		</div>
+	</div>
+	
 </body>
 </html>
