@@ -1,5 +1,7 @@
 package com.example.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -22,4 +24,10 @@ public class ArticleRepository {
 		article.setContent(rs.getString("content"));
 		return article;
 	};
+	
+	public List<Article> findAll(){
+		String sql="select id,name,content from articles order by id desc;";
+		List<Article> articleList= template.query(sql, ARTICLE_ROW_MAPPER);
+		return articleList;
+	}
 }
