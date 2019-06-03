@@ -50,6 +50,8 @@ public class ArticleRepository {
 		return articleList;
 	}
 	
+	//select a.id ,a.name,a.content,c.id as com_id,c.name as com_id,c.content as com_content from articles a inner join comments c on(a.id=c.article_id) order by a.id desc ,c.id desc
+	
 	/**
 	 * 記事を投稿する.
 	 * 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Article;
+import com.example.domain.Comment;
 import com.example.form.ArticlePostForm;
 import com.example.form.CommentPostForm;
 import com.example.repository.ArticleRepository;
@@ -74,6 +75,27 @@ public class ArticleController {
 		article.setName(form.getName());
 		article.setContent(form.getContent());
 		repository.insert(article);
+		return index(model);
+	}
+
+	/**
+	 * コメントを投稿する.
+	 * 
+	 * @param form 投稿内容
+	 * @param result　エラーチェック
+	 * @param model　リクエストスコープ
+	 * @return　記事一覧画面
+	 */
+	@RequestMapping("commentpost")
+	public String commentPost(@Validated CommentPostForm form ,BindingResult result,Model model) {
+		if(result.hasErrors()) {
+			return index(model);
+		}
+		Comment comment=new Comment();
+		comment.setName(form.getName());
+		comment.setContent(form.getContent());
+		comment.setArticleId(form.getArticleId());
+		commentrepo.insert(comment);
 		return index(model);
 	}
 }

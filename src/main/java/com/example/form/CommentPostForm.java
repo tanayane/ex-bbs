@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.Length;
  */
 public class CommentPostForm {
 	/**	  コメントID*/
-	private Integer id;
+	private Integer articleId;
 	/**	  コメント者名*/
 	@NotBlank(message="名前を入力してください")
 	@Length(min=0,max=50,message="名前は50文字以内で入力してください")
@@ -26,11 +26,11 @@ public class CommentPostForm {
 		return "CommentPostForm [name=" + name + ", content=" + content + "]";
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getArticleId() {
+		return articleId;
 	}
-	public void setId(Integer id) {
-		this.id = id;
+	public void setArticleId(Integer id) {
+		this.articleId = id;
 	}
 	public String getName() {
 		return name;
