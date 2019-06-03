@@ -1,9 +1,19 @@
 package com.example.domain;
 
+/**
+ * コメントを表す.
+ * 
+ * @author ayane.tanaka
+ *
+ */
 public class Comment {
+	/**	  コメントid */
 	private Integer id;
+	/**	  コメント者名 */
 	private String name;
+	/**	  コメント内容 */
 	private String content;
+	/**	  記事ID */
 	private Integer articleId;
 	
 	

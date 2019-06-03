@@ -1,7 +1,9 @@
 package com.example.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -42,8 +44,9 @@ public class ArticleRepository {
 	 * @return 記事のリスト
 	 */
 	public List<Article> findAll(){
-		String sql="select id,name,content from articles order by id desc;";
+		String sql="select id ,name,content from articles order by id desc";
 		List<Article> articleList= template.query(sql, ARTICLE_ROW_MAPPER);
+		System.out.println(articleList.get(0).getName());
 		return articleList;
 	}
 	
@@ -53,7 +56,7 @@ public class ArticleRepository {
 	 * @param article 投稿したい記事
 	 */
 	public void insert(Article article) {
-		String sql="insert into articles (name,content) values ('aman','hello')";
+		String sql="insert into articles (name,content) values (:name,:content)";
 		SqlParameterSource param=new BeanPropertySqlParameterSource(article);
 		template.update(sql, param);	
 	}

@@ -5,24 +5,32 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 
 /**
- * 記事投稿機能のフォーム.
+ * コメント投稿のためのフォーム.
  * 
  * @author ayane.tanaka
  *
  */
-public class ArticlePostForm {
-	/**	  投稿者名 */
+public class CommentPostForm {
+	/**	  コメントID*/
+	private Integer id;
+	/**	  コメント者名*/
 	@NotBlank(message="名前を入力してください")
 	@Length(min=0,max=50,message="名前は50文字以内で入力してください")
 	private String name;
-	
-	/**	  投稿者名 */
+	/**	  コメント内容*/
 	@NotBlank(message="投稿内容を入力してください")
 	private String content;
 	
 	@Override
 	public String toString() {
-		return "ArticlePostForm [name=" + name + ", content=" + content + "]";
+		return "CommentPostForm [name=" + name + ", content=" + content + "]";
+	}
+
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	public String getName() {
 		return name;
