@@ -89,8 +89,11 @@ public class ArticleController {
 	@RequestMapping("commentpost")
 	public String commentPost(@Validated CommentPostForm form ,BindingResult result,Model model) {
 		if(result.hasErrors()) {
+			System.out.println("koko");
+			System.out.println(form.toString());
 			return index(model);
 		}
+		System.out.println("kotti");
 		Comment comment=new Comment();
 		comment.setName(form.getName());
 		comment.setContent(form.getContent());

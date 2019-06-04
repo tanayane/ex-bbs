@@ -23,7 +23,7 @@ public class CommentPostForm {
 	
 	@Override
 	public String toString() {
-		return "CommentPostForm [name=" + name + ", content=" + content + "]";
+		return "CommentPostForm [articleId="+articleId+",name=" + name + ", content=" + content + "]";
 	}
 
 	public Integer getArticleId() {

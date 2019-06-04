@@ -6,7 +6,7 @@
 </head>
 <body>
 	<h1>掲示板アプリケーション</h1>
-	<form action ="bbs.html" th:action="@{/articlepost}" th:object="${articlePostForm}">
+	<form action ="bbs.html" th:action="@{/articlepost}" th:object="${articlePostForm}" method="post">
 		<label for="artnameform">投稿者名：</label>
 		<input type="text" name="name" id="artnameform" th:field="*{name}">
 		<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red">error</span>
@@ -33,7 +33,7 @@
 				<br>
 			</div>
 			<div>
-				<form action ="bbs.html" th:action="@{/commentpost}" th:object="${commentPostForm}">
+				<form action ="bbs.html" th:action="@{/commentpost}" th:object="${commentPostForm}" method="post">
 					<label for="comnameform">コメント者名：</label>
 					<input type="text" name="name" id="comnameform" th:field="*{name}">
 					<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red">error</span>
@@ -42,7 +42,7 @@
 					<textarea name="content" id="artcommform" th:field="*{content}"></textarea>
 					<span th:if="${#fields.hasErrors('content')}" th:errors="*{content}" style="color: red">error</span>
 					<br>
-					<input type="hidden" name="articleId" value="${article.id}">
+					<input type="hidden" name="articleId" th:value="${article.id}">
 					<input type="submit" value="コメント投稿">
 				</form>
 			</div>

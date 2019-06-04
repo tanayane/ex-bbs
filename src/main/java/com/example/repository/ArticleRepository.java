@@ -46,7 +46,6 @@ public class ArticleRepository {
 	public List<Article> findAll(){
 		String sql="select id ,name,content from articles order by id desc";
 		List<Article> articleList= template.query(sql, ARTICLE_ROW_MAPPER);
-		System.out.println(articleList.get(0).getName());
 		return articleList;
 	}
 	
