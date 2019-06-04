@@ -66,7 +66,7 @@ public class ArticleRepository {
 	 * 
 	 * @param articleId 削除する記事のid
 	 */
-	public void delete(Integer articleId) {
+	public void deleteById(Integer articleId) {
 		String sql="WITH deleted AS (DELETE FROM articles WHERE id = :articleId RETURNING id) "
 				+ "DELETE FROM comments WHERE article_id IN (SELECT id FROM deleted)";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("articleId", articleId);

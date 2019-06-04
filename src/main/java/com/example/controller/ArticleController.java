@@ -119,7 +119,7 @@ public class ArticleController {
 	 */
 	@RequestMapping("/articledelete")
 	public String articleDelete(Integer articleId,Model model) {
-		artrepository.delete(articleId);
+		artrepository.deleteById(articleId);
 		return "redirect:/";
 	}
 }
