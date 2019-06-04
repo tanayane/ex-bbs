@@ -38,19 +38,18 @@
 			</div>
 			<div>
 				<form action ="bbs.html" th:action="@{/commentpost}" th:object="${commentPostForm}" method="post">
+					<div>
 					<label for="comnameform">コメント者名：</label>
-					<div th:switch="${article.id}">
-						<input th:case="${commentPostForm.articleId}" type="text" name="name" id="comnameform" th:field="*{name}"  >
-						<input th:case="*" type="text" name="name" id="comnameform" >
-					</div>			
+					<input th:if="${article.id == commentPostForm.articleId}" type="text" name="name" id="comnameform" th:field="*{name}"  >
+					<input th:if="${article.id != commentPostForm.articleId}" type="text" name="name" id="comnameform" >
+					</div>
+					<div>
 					<span th:if="${#fields.hasErrors('name') && article.id == commentPostForm.articleId}" th:errors="*{name}" style="color: red">error</span>
 					<label for="artcommform">コメント内容：</label>
-					<div th:switch="${article.id}">
-						<textarea th:case="${commentPostForm.articleId}" name="content" id="artcommform" th:field="*{content}"></textarea>
-						<textarea th:case="*" name="content" id="artcommform" ></textarea>
-					</div>
+					<textarea th:if="${article.id == commentPostForm.articleId}" name="content" id="artcommform" th:field="*{content}"></textarea>
+					<textarea th:if="${article.id != commentPostForm.articleId}" name="content" id="artcommform" ></textarea>
 					<span th:if="${#fields.hasErrors('content') && article.id == commentPostForm.articleId}" th:errors="*{content}" style="color: red">error</span>
-					<br>
+					</div>
 					<input type="hidden" name="articleId" th:value="${article.id}">
 					<input type="submit" value="コメント投稿">
 				</form>

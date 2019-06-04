@@ -62,9 +62,6 @@ public class ArticleController {
 	@RequestMapping("")
 	public String index(Model model) {
 		List<Article> articleList=artrepository.findAll();
-		for(Article article:articleList) {
-			article.setCommentList(comrepository.findByArticleId(article.getId()));
-		}
 		model.addAttribute("articleList",articleList);
 		return "bbs";
 	}
