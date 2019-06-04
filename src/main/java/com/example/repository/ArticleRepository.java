@@ -1,12 +1,11 @@
 package com.example.repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
@@ -60,5 +59,17 @@ public class ArticleRepository {
 		String sql="insert into articles (name,content) values (:name,:content)";
 		SqlParameterSource param=new BeanPropertySqlParameterSource(article);
 		template.update(sql, param);	
+	}
+	
+	/**
+	 * 記事とその記事についたコメントを削除する.
+	 * 
+	 * @param articleId 削除する記事のid
+	 */
+	public void delete(Integer articleId) {
+		String sql="WITH deleted AS (DELETE FROM articles WHERE id = :articleId RETURNING id) "
+				+ "DELETE FROM comments WHERE article_id IN (SELECT id FROM deleted)";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("articleId", articleId);
+		template.update(sql, param);
 	}
 }

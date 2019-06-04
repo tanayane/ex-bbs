@@ -28,15 +28,26 @@ import com.example.repository.CommentRepository;
 public class ArticleController {
 	
 	@Autowired
-	private ArticleRepository repository;
+	private ArticleRepository artrepository;
 	
 	@Autowired
-	private CommentRepository commentrepo;
+	private CommentRepository comrepository;
 	
+	/**
+	 * 記事投稿フォームの準備.
+	 * 
+	 * @return 記事投稿フォーム
+	 */
 	@ModelAttribute
 	public ArticlePostForm setupArticleForm() {
 		return new ArticlePostForm();
 	}
+	
+	/**
+	 * コメント投稿フォームの準備.
+	 * 
+	 * @return コメント投稿フォーム
+	 */
 	@ModelAttribute
 	public CommentPostForm setupCommentForm() {
 		return new CommentPostForm();
@@ -50,9 +61,9 @@ public class ArticleController {
 	 */
 	@RequestMapping("")
 	public String index(Model model) {
-		List<Article> articleList=repository.findAll();
+		List<Article> articleList=artrepository.findAll();
 		for(Article article:articleList) {
-			article.setCommentList(commentrepo.findByArticleId(article.getId()));
+			article.setCommentList(comrepository.findByArticleId(article.getId()));
 		}
 		model.addAttribute("articleList",articleList);
 		return "bbs";
@@ -74,8 +85,8 @@ public class ArticleController {
 		Article article=new Article();
 		article.setName(form.getName());
 		article.setContent(form.getContent());
-		repository.insert(article);
-		return index(model);
+		artrepository.insert(article);
+		return "redirect:/";
 	}
 
 	/**
@@ -89,16 +100,26 @@ public class ArticleController {
 	@RequestMapping("commentpost")
 	public String commentPost(@Validated CommentPostForm form ,BindingResult result,Model model) {
 		if(result.hasErrors()) {
-			System.out.println("koko");
-			System.out.println(form.toString());
 			return index(model);
 		}
-		System.out.println("kotti");
 		Comment comment=new Comment();
 		comment.setName(form.getName());
 		comment.setContent(form.getContent());
 		comment.setArticleId(form.getArticleId());
-		commentrepo.insert(comment);
-		return index(model);
+		comrepository.insert(comment);
+		return "redirect:/";
+	}
+	
+	/**
+	 * 指定されたidの記事とその記事へのコメントを削除する.
+	 * 
+	 * @param articleId 指定されたid
+	 * @param model リクエストスコープ
+	 * @return　記事一覧画面
+	 */
+	@RequestMapping("/articledelete")
+	public String articleDelete(Integer articleId,Model model) {
+		artrepository.delete(articleId);
+		return "redirect:/";
 	}
 }

@@ -18,12 +18,16 @@
 		<input type="submit" value="記事投稿">
 	</form>
 	<div>
-		<div th:each="article:${articleList}">
+		<div th:each="article,status:${articleList}">
 			<hr>
 			<div>
 				<div>投稿ID：<span th:text="${article.id}">id</span></div>
 				<div>投稿者名：<span th:text="${article.name}">name</span></div>
 				<div>投稿内容：<span th:text="${article.content}">content</span></div>
+				<form action="bbs.html" th:action="@{/articledelete}" method="post">
+					<input type="hidden" th:value="${article.id}" name="articleId">
+					<input type="submit" value="記事削除">
+ 				</form>
 				<br>
 			</div>
 			<div th:each="comment:${article.commentList}">
@@ -36,11 +40,11 @@
 				<form action ="bbs.html" th:action="@{/commentpost}" th:object="${commentPostForm}" method="post">
 					<label for="comnameform">コメント者名：</label>
 					<input type="text" name="name" id="comnameform" th:field="*{name}">
-					<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red">error</span>
+					<span th:if="${#fields.hasErrors('name') && article.id == commentPostForm.articleId}" th:errors="*{name}" style="color: red">error</span>
 					<br>
 					<label for="artcommform">コメント内容：</label>
 					<textarea name="content" id="artcommform" th:field="*{content}"></textarea>
-					<span th:if="${#fields.hasErrors('content')}" th:errors="*{content}" style="color: red">error</span>
+					<span th:if="${#fields.hasErrors('content') && article.id == commentPostForm.articleId}" th:errors="*{content}" style="color: red">error</span>
 					<br>
 					<input type="hidden" name="articleId" th:value="${article.id}">
 					<input type="submit" value="コメント投稿">
